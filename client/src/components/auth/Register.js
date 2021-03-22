@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Link, withRouter } from "react-router-dom"
+import { Link, useLocation, withRouter } from "react-router-dom"
 import PropTypes from "prop-types"
 import { connect } from "react-redux"
 import { registerUser } from "../../actions/authActions"
@@ -25,6 +25,19 @@ const Register = ({ auth, history, errors: errorProp, registerUser }) => {
 	const [password2, setPassword2] = useState("")
 	const [errors, setErrors] = useState({})
 	const classes = useStyles()
+	const location = useLocation()
+	const [pageTitle, setPageTitle] = useState("")
+
+	useEffect(() => {
+		if (
+			location.pathname == "/register-seller" ||
+			location.pathname == "/login-seller"
+		) {
+			setPageTitle("Seller")
+		} else {
+			setPageTitle("Buyer")
+		}
+	}, [location.pathname])
 
 	useEffect(() => {
 		if (auth.isAuthenticated) {
@@ -46,14 +59,14 @@ const Register = ({ auth, history, errors: errorProp, registerUser }) => {
 			password2,
 		}
 
-		registerUser(newUser, history)
+		registerUser(newUser, history, pageTitle)
 	}
 
 	return (
 		<Paper style={{ padding: 15 }}>
 			<Link to="/"> Back to home</Link>
 			<div style={{ textAlign: "center" }}>
-				<h4>Register</h4>
+				<h4>{pageTitle} Register</h4>
 			</div>
 			<form noValidate onSubmit={handleSubmit}>
 				<TextField
@@ -104,9 +117,6 @@ const Register = ({ auth, history, errors: errorProp, registerUser }) => {
 					</Button>
 				</div>
 			</form>
-			<p style={{ textAlign: "center" }}>
-				Already have an account? <Link to="/login">Log in</Link>
-			</p>
 		</Paper>
 	)
 }

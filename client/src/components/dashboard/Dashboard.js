@@ -1,55 +1,60 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import PropTypes from "prop-types"
 import { connect } from "react-redux"
-import { logoutUser } from "../../actions/authActions"
 import Paper from "@material-ui/core/Paper"
-import { Avatar } from "@material-ui/core"
+import { Avatar, Button, makeStyles, TextField } from "@material-ui/core"
 import { getCurrentProfile } from "../../actions/profileActions"
+import AddItemForm from "./AddItemForm"
+import RateChart from "./RateChart"
+import BuyerView from "./BuyerView"
 
-const Dashboard = ({ auth, logoutUser, getCurrentProfile }) => {
+const Dashboard = ({ auth, getCurrentProfile }) => {
 	const { user } = auth
 	console.log(user)
-
-	useEffect(() => {
+	useEffect(async () => {
 		getCurrentProfile()
 	}, [])
-	return (
-		<Paper style={{ padding: 15 }}>
-			<div>
-				<div>
+
+	const SellerView = () => {
+		return (
+			<>
+				<Paper style={{ padding: 15 }}>
 					<div>
-						<div style={{ display: "flex", justifyContent: "space-between" }}>
-							<p>
-								<b>Hey there, {user.name} </b>
-								<br />
-								<span>
-									Profile Description:
-									{user.description}
-								</span>
-							</p>
+						<div>
+							<div>
+								<div
+									style={{ display: "flex", justifyContent: "space-between" }}
+								>
+									<p>
+										<b>Hey there, {user.name} </b>
+										<br />
+										<span>
+											Profile Description:
+											{user.description}
+										</span>
+									</p>
 
-							<Avatar
-								src={user.profilePicture}
-								style={{ height: 200, width: 200 }}
-							/>
+									<Avatar
+										src={user.profilePicture}
+										style={{ height: 200, width: 200 }}
+									/>
+								</div>
+							</div>
 						</div>
-
-						<button
-							style={{
-								width: "150px",
-								borderRadius: "3px",
-								letterSpacing: "1.5px",
-								marginTop: "1rem",
-							}}
-							onClick={logoutUser}
-						>
-							Logout
-						</button>
 					</div>
-				</div>
-			</div>
-		</Paper>
-	)
+				</Paper>
+
+				<Paper style={{ padding: 15, marginTop: 10 }}>
+					<AddItemForm />{" "}
+				</Paper>
+				<Paper style={{ padding: 15, marginTop: 10 }}>
+					<RateChart />{" "}
+				</Paper>
+			</>
+		)
+	}
+
+	return user.profilePicture !== undefined ? <SellerView /> : <BuyerView />
 }
 
 Dashboard.propTypes = {
@@ -61,6 +66,4 @@ const mapStateToProps = (state) => ({
 	auth: state.auth,
 })
 
-export default connect(mapStateToProps, { logoutUser, getCurrentProfile })(
-	Dashboard
-)
+export default connect(mapStateToProps, { getCurrentProfile })(Dashboard)

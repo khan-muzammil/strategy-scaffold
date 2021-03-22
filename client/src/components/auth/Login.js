@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import PropTypes from "prop-types"
 import { connect } from "react-redux"
 import { loginUser } from "../../actions/authActions"
@@ -22,6 +22,19 @@ const Login = ({ history, auth, errors: errorProp, loginUser }) => {
 	const [password, setPassword] = useState("")
 	const [errors, setErrors] = useState("")
 	const classes = useStyles()
+	const location = useLocation()
+	const [pageTitle, setPageTitle] = useState("")
+
+	useEffect(() => {
+		if (
+			location.pathname == "/register-seller" ||
+			location.pathname == "/login-seller"
+		) {
+			setPageTitle("Seller")
+		} else {
+			setPageTitle("Buyer")
+		}
+	}, [location.pathname])
 
 	useEffect(() => {
 		if (auth.isAuthenticated) {
@@ -37,7 +50,7 @@ const Login = ({ history, auth, errors: errorProp, loginUser }) => {
 
 		const userData = { email, password }
 
-		loginUser(userData)
+		loginUser(userData, pageTitle)
 	}
 
 	return (
@@ -46,7 +59,7 @@ const Login = ({ history, auth, errors: errorProp, loginUser }) => {
 				<Link to="/">Back to home</Link>
 			</div>
 			<div style={{ textAlign: "center" }}>
-				<h4>Login</h4>
+				<h4>{pageTitle} Login</h4>
 			</div>
 			<form noValidate onSubmit={handleSubmit}>
 				<TextField
@@ -75,9 +88,6 @@ const Login = ({ history, auth, errors: errorProp, loginUser }) => {
 					</Button>
 				</div>
 			</form>
-			<p style={{ textAlign: "center" }}>
-				Don't have an account? <Link to="/register">Register</Link>
-			</p>
 		</Paper>
 	)
 }

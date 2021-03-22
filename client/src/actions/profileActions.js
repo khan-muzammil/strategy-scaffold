@@ -1,11 +1,9 @@
 import axios from "axios"
 import { setCurrentUser } from "./authActions"
 
-import { GET_ERRORS } from "./types"
-
 export const updateProfileData = (userData, history) => (dispatch) => {
 	axios
-		.put("/api/profile", userData)
+		.put("/api/seller-profile", userData)
 		.then((res) => {
 			console.log("response from put", res)
 			dispatch(getCurrentProfile())
@@ -17,7 +15,7 @@ export const updateProfileData = (userData, history) => (dispatch) => {
 export const getCurrentProfile = () => (dispatch) => {
 	console.log("getting current user")
 	axios
-		.get("/api/profile")
+		.get("/api/seller-profile")
 		.then((res) => {
 			dispatch(setCurrentUser(res.data))
 		})

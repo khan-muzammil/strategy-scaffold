@@ -19,22 +19,10 @@ const useStyles = makeStyles(() => ({
 	},
 }))
 
-function Header({ logoutUser, isAuthenticated }) {
+function Header({ logoutUser, isAuthenticated, user }) {
 	const classes = useStyles()
 
-	const guestLinks = (
-		<div
-			style={{
-				display: "flex",
-				justifyContent: "space-between",
-				width: "120px",
-			}}
-		>
-			<Link to="/login">Login</Link>
-
-			<Link to="/register">Register</Link>
-		</div>
-	)
+	const guestLinks = <div></div>
 
 	const authLinks = isAuthenticated && (
 		<div
@@ -44,7 +32,7 @@ function Header({ logoutUser, isAuthenticated }) {
 				width: "150px",
 			}}
 		>
-			<Link to={`/profile`}>Edit Profile</Link>
+			{user.profilePicture ? <Link to={`/profile`}>Edit Profile</Link> : ""}
 
 			<Link to="/#" onClick={logoutUser}>
 				Logout

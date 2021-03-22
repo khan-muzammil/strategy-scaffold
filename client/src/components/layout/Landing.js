@@ -17,24 +17,44 @@ const Landing = ({ auth, history }) => {
 
 				<div style={{ display: "flex", justifyContent: "space-between" }}>
 					<Link
-						to="/register"
+						to="/register-seller"
 						style={{
-							width: "140px",
-							borderRadius: "3px",
 							letterSpacing: "1.5px",
 						}}
 					>
-						Register
+						Register as Seller
 					</Link>
 					<Link
-						to="/login"
+						to="/login-seller"
 						style={{
-							width: "140px",
-							borderRadius: "3px",
 							letterSpacing: "1.5px",
 						}}
 					>
-						Log In
+						Log In as Seller
+					</Link>
+				</div>
+				<div
+					style={{
+						display: "flex",
+						justifyContent: "space-between",
+						marginTop: 50,
+					}}
+				>
+					<Link
+						to="/register-buyer"
+						style={{
+							letterSpacing: "1.5px",
+						}}
+					>
+						Register as buyer
+					</Link>
+					<Link
+						to="/login-buyer"
+						style={{
+							letterSpacing: "1.5px",
+						}}
+					>
+						Log In as buyer
 					</Link>
 				</div>
 			</div>

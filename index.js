@@ -7,6 +7,7 @@ const path = require("path")
 
 const auth = require("./routes/auth")
 const profile = require("./routes/profile")
+const seller = require("./routes/seller")
 
 // setup environment
 dotenv.config()
@@ -20,7 +21,8 @@ app.use(passport.initialize())
 require("./config/passport")(passport)
 
 app.use("/api/auth", auth)
-app.use("/api/profile", profile)
+app.use("/api/seller-profile", profile)
+app.use("/api/seller", seller)
 
 const env = process.env.NODE_ENV || "default"
 const PORT = process.env.PORT || 3001

@@ -3,7 +3,7 @@ const router = express.Router()
 const passport = require("passport")
 
 // Load User model
-const User = require("../models/User")
+const Seller = require("../models/Seller")
 
 router.put(
 	"/",
@@ -11,7 +11,7 @@ router.put(
 	async (req, res) => {
 		const description = req.body.description
 		const profilePicture = req.body.profilePicture
-		const result = await User.findByIdAndUpdate(
+		const result = await Seller.findByIdAndUpdate(
 			req.user.id,
 			{
 				profilePicture,
@@ -33,7 +33,10 @@ router.get(
 			email: req.user.email,
 			name: req.user.name,
 			description: req.user.description,
-			profilePicture: req.user.profilePicture || "null",
+			profilePicture:
+				req.user.profilePicture ||
+				"https://www.allfreschgroup.com/wp-content/uploads/2017/01/Valencia-Orange.png",
+			rates: req.user.rates,
 		})
 	}
 )

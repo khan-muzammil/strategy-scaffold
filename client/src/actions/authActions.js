@@ -6,10 +6,14 @@ import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING } from "./types"
 import { getCurrentProfile } from "./profileActions"
 
 // Register User
-export const registerUser = (userData, history) => (dispatch) => {
+export const registerUser = (userData, history, pageTitle) => (dispatch) => {
+	const registerUrl =
+		pageTitle == "Seller"
+			? "/api/auth/register-seller"
+			: "/api/auth/register-buyer"
 	axios
-		.post("/api/auth/register", userData)
-		.then((res) => history.push("/login"))
+		.post(registerUrl, userData)
+		.then((res) => history.push("/"))
 		.catch((err) =>
 			dispatch({
 				type: GET_ERRORS,
@@ -19,9 +23,11 @@ export const registerUser = (userData, history) => (dispatch) => {
 }
 
 // Login - get user token
-export const loginUser = (userData) => (dispatch) => {
+export const loginUser = (userData, pageTitle) => (dispatch) => {
+	const loginUrl =
+		pageTitle == "Seller" ? "/api/auth/login-seller" : "/api/auth/login-buyer"
 	axios
-		.post("/api/auth/login", userData)
+		.post(loginUrl, userData)
 		.then((res) => {
 			// Save to localStorage
 
