@@ -1,4 +1,7 @@
+const dotenv = require("dotenv")
+dotenv.config()
+
 module.exports = {
-	mongoURI: "mongodb://localhost:27017/strategy-co",
+	mongoURI: process.env.MONGODB_URL,
 	secretOrKey: "secret",
 }
