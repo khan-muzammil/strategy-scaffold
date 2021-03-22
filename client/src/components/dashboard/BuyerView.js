@@ -54,8 +54,14 @@ function BuyerView() {
 											aria-controls="panel1a-content"
 											id="panel1a-header"
 										>
-											<Typography className={classes.heading}>
+											<Typography
+												className={classes.heading}
+												style={{ marginRight: 50 }}
+											>
 												{seller.name}
+											</Typography>
+											<Typography className={classes.heading}>
+												{seller.email}
 											</Typography>
 										</AccordionSummary>
 										{seller.rates.length > 0 ? (
